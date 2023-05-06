@@ -13,7 +13,7 @@ drawings:
   persist: false
 transition: slide-left
 css: unocss
-title: 微前端
+title: GeoScene JS API 微前端初探
 ---
 
 # GeoScene JS API 微前端初探
@@ -156,9 +156,9 @@ transition: slide-left
 <!--
 假如我们现在要做微前端，那么微前端的架构应该是怎么样的呢？
 大体上，微前端的架构是分为了三个部分，
-分别是微应用，它理解为页面的一部分。比如说cim-map中的标绘组件，在地图的右侧有一个功能按钮，我们点击之后，弹出一块面板，面板内是标绘的业务逻辑。这块面板我们就可以拆分出来，作为一个微前端。可以近似地理解为微件，但是微前端和微件本质上有不同。
-这是第一部分微应用，第二部分是基座或者叫主应用，也拿cim-map来举例的话，就是一个空的页面，只有一个纯净的底图，或者底图都没有，它只是充当的一个容器，它的职责应该做好一些系统最基本的功能，比如布局、路由、权限...然后暴露出很多的插槽给我们的微前端们。
-这是第二部分，那么第三部分就是我们的框架，它的作用是用连接我们的基座和微前端，它要来管理我们的基座加载或者是卸载我们的微前端。
+分别是微应用，它理解为页面的一部分。比如说cim-map中的标绘组件，在地图的右侧有一个功能按钮，我们点击之后，弹出一块面板，面板内是标绘的业务逻辑。这块面板我们就可以拆分出来，作为一个微应用。可以近似地理解为微件，但是微应用和微件本质上有不同。
+这是第一部分微应用，第二部分是基座或者叫主应用，也拿cim-map来举例的话，就是一个空的页面，只有一个纯净的底图，或者底图都没有，它只是充当的一个容器，它的职责应该做好一些系统最基本的功能，比如布局、路由、权限...然后暴露出很多的插槽给我们的微应用。
+这是第二部分，那么第三部分就是我们的框架，它的作用是用连接我们的基座和微应用，它要来管理我们的基座加载或者是卸载我们的微应用。
 -->
 
 ---
@@ -170,7 +170,7 @@ transition: slide-left
 框架的 4 个关键性决策：
 |定义|组合/路由|通信|
 | --- | --- | --- |
-| <font color='blue'>横向拆分</font> <br/> <font color='gray'>纵向拆分</font> | <font color='blue'>客户端</font> <br/> <font color='gray'>服务器端</font> <br/><font color='gray'>边缘侧</font> | <font color='blue'>事件触发器</font> <br/> <font color='blue'>自定义事件</font> <br/><font color='blue'>Web Storage</font> <br/><font color='blue'>查询字符串</font>
+| <font color='blue'>横向拆分</font> <br/> <font color='gray'>纵向拆分</font> | <font color='blue'>客户端</font> <br/> <font color='gray'>服务器端</font> <br/><font color='gray'>边缘侧</font> | <font color='blue'>事件触发器</font> <br/> <font color='blue'>自定义事件</font> <br/><font color='blue'>Web Storage</font> <br/><font color='gray'>查询字符串</font>
 
 <!--
 我们首先来讨论框架，框架有4个关键性的决策，分别是定义、组合、路由和通信。
@@ -200,11 +200,12 @@ transition: slide-left
 思路：
 1. 新建一个host应用，在host应用中写一个基本的地图
 2. 新建一个remote应用，叫sketch，在remote/sketch中实现基本地图和一个Sketch微件
-3. 配置host和remote的webpack5，使得host应用中引入remote/sketch
-4. 再新建一个remote应用，叫panel，在remote/panel中实现一个布局，然后被host引入
+3. 配置host和remote的webpack5，使得remote中导出应用，并在host应用中引入remote/sketch
+4. 再新建一个remote应用，叫panel，在remote/panel中实现一个布局，同样被host引入
 
 <!--
-我们直接来看一个简单的demo。
+这里我写了一个demo，demo的思路主要是这4步。
+然后我们总览一下这个demo，如果在cimmap上使用这种风格。那么host就对应青岛项目一个host、西安项目一个host。remote，比如分层分户一个微应用、视频融合一个微应用。然后布局相关的又是另一个微应用，比如工具栏，资源树。
 -->
 
 ---
@@ -216,7 +217,7 @@ transition: slide-left
 待研究...
 
 <!--
-构建和部署还待研究，就先不讲了。
+构建和部署的内容也很多，研究完了之后可以再讲一期。
 -->
 
 ---
@@ -265,7 +266,7 @@ transition: slide-left
 * 博客：[Module Federation in webpack](https://odoe.net/blog/webpack-module-federation)
 * 视频：[Micro-Frontends in Just 10 Minutes](https://www.youtube.com/watch?v=s_Fs4AXsTnA&t=2s)
 * 社区：[How to architect a micro-frontends project under ArcGIS JS API?](https://community.esri.com/t5/arcgis-javascript-maps-sdk-questions/how-to-architect-a-micro-frontends-project-under/m-p/1277816#M80846)
-* 官网：[webpack5](https://webpack.js.org/concepts/module-federation/#dynamic-remote-containers) & [ArcGIS JS API](https://developers.arcgis.com/javascript/latest/es-modules/)
+* 官网：[webpack5](https://webpack.js.org/concepts/module-federation/#motivation) & [ArcGIS JS API](https://developers.arcgis.com/javascript/latest/es-modules/)
 
 <!--
 最后是一些参考资料。我是从3月份中旬开始准备分享材料。然后项目也比较忙。所以研究得很浅。主要参考的是书籍，2022年下半年才出的书，还算比较新。ppt的大纲就是直接抄的书。
